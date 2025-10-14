@@ -30,22 +30,42 @@
   </header>
 
   <main class="container">
-    <section class="featured">
-      <h2 class="section-title">Featured</h2>
-      <article class="card card-featured">
-        <a class="card-link" href="devblog.html">
-          <div class="card-body">
-            <h3 class="card-title">Shipping the Starter: Coffee + Kids + Code</h3>
-            <p class="card-meta">#DevBlog · Oct 12, 2025</p>
-            <p class="card-text">
-              The philosophy behind the stack and how this site will balance code notes, dad life, and real talk. Quick tour of the layout you’re seeing right now.
-            </p>
-            <span class="read-more">Read more →</span>
-          </div>
-        </a>
-      </article>
-    </section>
+    <!-- About + Visual Trio Section -->
+<section class="about">
+  <h2 class="section-title">About Geoffrey D. Metzger</h2>
+  <p class="about-text">
+    I’m a developer, father, and lifelong learner building projects that blend logic with love.
+    By day, I write code and design tools that make life a little smoother.
+    By night, I’m a dad debugging homework, bedtime, and the occasional Minecraft bug.
+  </p>
+  <p class="about-quote"><em>Integrity in code. Purpose in life.</em></p>
 
+  <div class="visual-trio">
+    <div class="card trio">
+      <img src="img/coffee.png" alt="Coffee cup">
+      <h3>Coffee</h3>
+    </div>
+    <div class="card trio">
+      <img src="img/kids.png" alt="Kids">
+      <h3>Kids</h3>
+    </div>
+    <div class="card trio">
+      <img src="img/code.png" alt="Code">
+      <h3>Code</h3>
+    </div>
+  </div>
+</section>
+
+<!-- Dynamic Quote Section -->
+<section class="quote-block" id="quote-block">
+  <blockquote id="quote-text"></blockquote>
+  <p class="quote-author" id="quote-author"></p>
+</section>
+<script src="js/quotes.js"></script>
+
+
+
+<!--
     <section class="grid">
       <h2 class="section-title">Latest posts</h2>
 
@@ -81,7 +101,7 @@
           </div>
         </a>
       </article>
-    </section>
+    </section>-->
   </main>
 
   <footer class="site-footer">
