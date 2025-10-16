@@ -51,7 +51,10 @@ main {
 .hero-inner{
   text-align:center;
   padding: 40px 16px;
+<<<<<<< HEAD
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+=======
+>>>>>>> d640f89152c439b276cce3dbb4229515c65c83c7
 }
 .brand{
   margin:0 0 8px 0;
@@ -420,6 +423,7 @@ pre, code {
   color: #fff;
 }
 
+<<<<<<< HEAD
 @media (max-width: 900px) {
   .container { padding: 20px 14px; }
 }
@@ -456,6 +460,10 @@ pre, code {
     font-size: 0.85rem;
   }
 }
+=======
+/* Small screens: horizontal scroll instead of wrap */
+@media (max-width: 600px) {
+>>>>>>> d640f89152c439b276cce3dbb4229515c65c83c7
   .tag-bar {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -468,6 +476,7 @@ pre, code {
   .tag-bar::-webkit-scrollbar {
     display: none;                  /* hide scrollbar (Chrome/Safari) */
   }
+<<<<<<< HEAD
   .tag-bar-wrapper {
     position: relative;
   }
@@ -511,4 +520,6 @@ pre, code {
 
 .share-buttons button:hover {
   background: var(--amber);
+=======
+>>>>>>> d640f89152c439b276cce3dbb4229515c65c83c7
 }
