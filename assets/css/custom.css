@@ -107,6 +107,13 @@ main {
   color:#fff;
   box-shadow:0 0 0 2px var(--mint) inset;
 }
+tag-bar {
+  display: flex;
+  justify-content: center;   /* centers horizontally */
+  flex-wrap: wrap;            /* keeps it neat on smaller screens */
+  gap: 1rem;                  /* even spacing between links */
+  padding: 1rem 0;
+}
 
 /* Layout */
 .container{
