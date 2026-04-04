@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The CKC Migration: The Hosting Platform — Coffee + Kids + Code</title>
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="mini-header">
+    <a class="home-link" href="../../index.html">← Coffee + Kids + Code</a>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <header class="post-header">
+        <h1 class="post-title">The CKC Migration: The Hosting Platform</h1>
+        <p class="post-meta">#DevBlog · March 6, 2026</p>
+      </header>
+
+      <section class="post-body">
+        <p>When I first started building, I wanted the "easy button." In the world of Next.js, that’s Vercel. You push your code to GitHub, and—poof—your site is live. It’s magic. But as I started planning the <strong>CKC Migration</strong>, I realized I didn't want magic; I wanted mastery.</p>
+
+        <h3>The Crossroads</h3>
+        <p>I had to decide where the "face" of my platform would live. Every architect faces this choice: do you take the specialist tool, or the generalist powerhouse?</p>
+        <ul>
+          <li><strong>Option A (Vercel):</strong> The "Easy" Choice. Exceptional developer experience, but it keeps your infrastructure in a black box.</li>
+          <li><strong>Option B (AWS Amplify):</strong> The "Architectural" Choice. It provides a similar Git-based workflow, but lives natively inside my AWS console.</li>
+        </ul>
+
+        <div class="image-wrapper">
+            <img src="../../img/architecture-diagram.jpg" alt="AWS Amplify Architecture Diagram" class="post-image">
+            <p class="image-caption">My CI/CD Workflow: Mapping the "Plumbing" of the Internet on AWS Amplify.</p>
+        </div>
+
+        <p><strong>My Decision: AWS Amplify</strong></p>
+
+        <h3>The "Why"</h3>
+        <p>I’m building this to show I can handle an enterprise environment. By choosing Amplify, I’m not just "hosting a site"; I’m managing a CI/CD pipeline within the AWS ecosystem. It’s cost-effective (fitting right into the Free Tier), and it proves I can navigate the same tools that major tech companies use every day.</p>
+
+        <hr>
+
+        <h3>🛠 My Step-by-Step Guide: Getting Your Site Live</h3>
+        <p>If you’re following along and have never used AWS before, don’t worry. I’ve got you. Here is exactly how I connected my code to the cloud.</p>
+
+        <h4>Step 1: Find the Amplify Service</h4>
+        <p>Log into your AWS Management Console. In the search bar at the top, type <strong>"Amplify"</strong> and click on <strong>AWS Amplify</strong>.</p>
+
+        <h4>Step 2: Start a New Deployment</h4>
+        <p>On the Amplify home page, click <strong>"Create new app"</strong>. You’ll see several options for where your code lives. I keep mine on <strong>GitHub</strong>, so I select that and click Next. Follow the prompts to authorize AWS to see your repositories.</p>
+
+        <h4>Step 3: Pick Your Repository</h4>
+        <p>Find your project (mine is <em>CoffeeKidsAndCode</em>) and select it. Choose the <strong>Main</strong> branch—this is the version of your code you want the world to see—and click Next.</p>
+
+        <h4>Step 4: Build Settings</h4>
+        <p>AWS is usually smart enough to see you are using Next.js and will fill in the build instructions for you. Double-check the App name and click Next.</p>
+
+        <h4>Step 5: Review and Launch</h4>
+        <p>Click <strong>Save and Deploy</strong>. You’ll see a progress bar while AWS spins up a tiny computer, downloads your code, and puts it on the internet. This usually takes about 2–3 minutes.</p>
+
+        <h4>Step 6: Visit Your Site</h4>
+        <p>Once the progress bar turns green, you’ll see a link ending in <code>.amplifyapp.com</code>. Click it! Your site is officially live.</p>
+
+        <hr>
+
+        <p><strong>Next:</strong> <a href="the-data-layer.html">Part 2 — The Data Layer (DynamoDB) →</a></p>
+      </section>
+
+      <footer class="post-footer">
+        <p class="tags">
+          <span>#CKCMigration</span>
+          <span>#AWS</span>
+          <span>#NextJS</span>
+          <span>#CloudHosting</span>
+        </p>
+        <nav class="post-nav">
+          <a href="../index.html">← Back to Blog</a>
+          <a href="the-data-layer.html" class="next">Next Post →</a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Geoffrey D. Metzger · Powered by Integrity Programming</p>
+  </footer>
+</body>
+</html>

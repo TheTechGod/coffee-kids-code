@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The CKC Migration: The Backend Powerhouse — Coffee + Kids + Code</title>
+  <meta name="description" content="Part 3 of The CKC Migration series — Choosing Serverless .NET 9 via AWS Lambda for an enterprise-grade, cost-effective API." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="mini-header">
+    <a class="home-link" href="../../index.html">← Coffee + Kids + Code</a>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <header class="post-header">
+        <h1 class="post-title">The CKC Migration: The Backend Powerhouse</h1>
+        <p class="post-meta">#DevBlog · March 20, 2026</p>
+      </header>
+
+      <section class="post-body">
+        <p>In our last post, we got a scalable database running with DynamoDB. But a database on its own is just storage. A modern blog needs a dedicated backend to manage things like search logic, processing comments, and protecting sensitive user data. This is where we need a robust backend framework.</p>
+
+        <h3>The Crossroads</h3>
+        <p>This is a defining architectural moment. Do I stick with my frontend language (JavaScript) and keep everything in one box, or do I introduce a completely new language to build a distributed system? My requirements are simple: it must be enterprise-grade, compiled, and cost absolutely nothing when it’s not in use.</p>
+        
+        <ul>
+          <li><strong>Option A (Next.js Server Actions):</strong> The "Monolithic" Choice. API logic lives inside the frontend code. Great for speed, but limits the demonstration of distributed system knowledge.</li>
+          <li><strong>Option B (Serverless .NET 9 via AWS Lambda):</strong> The "Architectural" Choice. A separate microservice built with C#. Because we use <strong>AWS Lambda</strong>, it only "wakes up" when a request hits it, keeping our costs at a $0 baseline.</li>
+        </ul>
+
+        <div class="image-wrapper" style="margin: 2.5rem 0; text-align: center;">
+          <img src="../../img/serverless-backend.png" alt="Architecture diagram showing Next.js talking to AWS API Gateway, which wakes up a .NET 9 Lambda and connects to DynamoDB" style="width: 100%; max-width: 850px; height: auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <p class="image-caption" style="font-size: 0.9rem; color: #666; font-style: italic; margin-top: 0.75rem;">Serverless Backend Flow: The request triggers API Gateway, which 'wakes up' our compiled C# Lambda.</p>
+        </div>
+
+        <p><strong>My Decision: .NET 9 Minimal API via AWS Lambda</strong></p>
+
+        <h3>The "Why"</h3>
+        <p>This decision is the heart of my portfolio's distributed design. I am decoupling the <strong>"Business Powerhouse"</strong> (the backend) from the <strong>"UI Specialist"</strong> (the frontend). By using <strong>AWS Lambda</strong> with .NET 9, I get an enterprise-grade backend that scales to zero. I also get to leverage <strong>Native AOT</strong> (Ahead-of-Time compilation), which makes the C# Lambda function start instantly—effectively solving the "Cold Start" lag of older serverless functions.</p>
+        
+        <p>This approach proves I can manage decoupled systems that mirror how real companies operate, all while maintaining a strict Free Tier budget.</p>
+
+        <hr>
+
+        <h3>🛠 My Step-by-Step Guide: Creating a .NET 9 Lambda API</h3>
+        <p>I chose a <strong>".NET Minimal API"</strong> approach packaged as a Lambda function. Here is how I got the "brain" of the operation running:</p>
+
+        <h4>Step 1: Install and Initialize</h4>
+        <p>I installed the AWS Lambda templates and initialized the project as an Empty Serverless app.</p>
+        <pre><code>dotnet new install Amazon.Lambda.Templates
+dotnet new serverless.EmptyServerless -n CKC.API</code></pre>
+
+        <h4>Step 2: Defining the Endpoint</h4>
+        <p>Inside <code>Program.cs</code>, I defined a clean endpoint. This acts as the 'gatekeeper' that receives requests from the frontend and interacts with our cloud services.</p>
+
+<pre><code>
+var builder = WebApplication.CreateBuilder(args);
+
+// Add AWS Lambda support and DynamoDB services
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+builder.Services.AddAWSService&lt;IAmazonDynamoDB&gt;();
+
+var app = builder.Build();
+
+app.MapGet("/api/posts/{id}", async (string id, IAmazonDynamoDB db) => {
+    // Fetch the item from our table
+    var result = await db.GetItemAsync("CKC_Posts", 
+        new Dictionary&lt;string, AttributeValue&gt; { { "PostID", new(id) } });
+    
+    return result.IsItemSet ? Results.Ok(result.Item) : Results.NotFound();
+});
+
+app.Run();
+</code></pre>
+
+        <h4>Step 3: Enable Native AOT</h4>
+        <p>To ensure the fastest performance on Lambda, I enabled Native AOT. This compiles the code directly to machine code, reducing startup time significantly.</p>
+        <pre><code>dotnet add package Microsoft.DotNet.ILCompiler --version 9.0.0</code></pre>
+
+        <hr>
+
+        <p><strong>Previous:</strong> <a href="the-data-layer.html">Part 2 — The Data Layer (DynamoDB)</a></p>
+        <p><strong>Next:</strong> <a href="traffic-routing.html">Part 4 — Domain & Traffic Routing (Route 53) →</a></p>
+      </section>
+
+      <footer class="post-footer">
+        <p class="tags">
+          <span>#DotNet9</span>
+          <span>#BackendDev</span>
+          <span>#AWSLambda</span>
+          <span>#NativeAOT</span>
+        </p>
+        <nav class="post-nav">
+          <a href="the-data-layer.html">← Previous Post</a>
+          <a href="traffic-routing.html" class="next">Next Post →</a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Geoffrey D. Metzger · Powered by Integrity Programming</p>
+  </footer>
+</body>
+</html>

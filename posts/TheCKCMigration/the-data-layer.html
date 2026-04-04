@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The CKC Migration: The Data Layer — Coffee + Kids + Code</title>
+  <meta name="description" content="Part 2 of The CKC Migration series — Deciding between RDS and DynamoDB for a cost-effective, scalable portfolio." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="mini-header">
+    <a class="home-link" href="../../index.html">← Coffee + Kids + Code</a>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <header class="post-header">
+        <h1 class="post-title">The CKC Migration: The Data Layer</h1>
+        <p class="post-meta">#DevBlog · March 13, 2026</p>
+      </header>
+
+      <section class="post-body">
+        <p>In my last post, I got the frontend live on AWS Amplify. Now, it’s time to talk about the "brain" of the operation: the database. For a blog like <strong>CoffeeKidsAndCode</strong>, the data isn't just text—it's the foundation for every feature I plan to build next.</p>
+
+        <h3>The Crossroads</h3>
+        <p>I had two very different paths to choose from when deciding how to store my data. Every architect faces this choice: do you prioritize the traditional power of SQL, or the modern efficiency of Serverless?</p>
+        
+        <ul>
+          <li><strong>Option A (RDS PostgreSQL):</strong> The "Enterprise" Choice. It’s powerful and relational, but it’s "always-on," meaning it costs money every hour, even if no one is visiting the site.</li>
+          <li><strong>Option B (DynamoDB):</strong> The "Serverless" Choice. It’s a NoSQL database that scales instantly and stays within the AWS Free Tier.</li>
+        </ul>
+
+        <div class="image-wrapper" style="margin: 2.5rem 0; text-align: center;">
+          <img src="../../img/The-efficiency-comparison.png" alt="RDS vs DynamoDB Cost and Scalability Comparison" style="width: 100%; max-width: 850px; height: auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <p class="image-caption" style="font-size: 0.9rem; color: #666; font-style: italic; margin-top: 0.75rem;">Scalability vs. Cost: Why DynamoDB wins for a growing portfolio.</p>
+        </div>
+
+        <p><strong>My Decision: DynamoDB</strong></p>
+
+        <h3>The "Why"</h3>
+        <p>I chose <strong>DynamoDB</strong> because I wanted a database that matches the "pay-as-you-go" philosophy of the modern cloud. While I love SQL, DynamoDB forces me to think differently about data modeling. It proves I can build a system that is both incredibly cheap to run and capable of handling millions of requests without breaking the bank.</p>
+
+        <hr>
+
+        <h3>🛠 My Step-by-Step Guide: Setting Up Your Database</h3>
+        <p>Setting up a database can feel intimidating, but DynamoDB makes it simple. Here is how I did it:</p>
+
+        <h4>Step 1: Create Your Table</h4>
+        <p>In your AWS Console, search for <strong>DynamoDB</strong>. Click <strong>"Create table"</strong>. I named mine <code>CKC_Posts</code>. For the <strong>Partition Key</strong>, I used <code>PostID</code> (set to String). This is the unique ID for every blog post.</p>
+
+        <h4>Step 2: Choose Your Settings</h4>
+        <p>Keep the <strong>"Default settings"</strong> for now. This ensures you stay within the <strong>Free Tier</strong>. Scroll down and hit <strong>Create table</strong>. It only takes a few seconds to be "Active."</p>
+
+        <h4>Step 3: Add Your First Post (The Manual Way)</h4>
+        <p>Click on your new table and select <strong>"Explore table items"</strong>. Click <strong>Create item</strong>. This is where I manually added my first post's data (Title, Content, Date, Category) just to make sure the "plumbing" was working.</p>
+
+        <h4>Step 4: Connecting the Code</h4>
+        <p>To get my Next.js app to talk to this table, I installed the AWS SDK in my project terminal:</p>
+        <pre><code>npm install @aws-sdk/client-dynamodb @aws-sdk/lib-dynamodb</code></pre>
+        
+        <p>Once the SDK is installed, I created a helper function to fetch a post by its ID. This is how the frontend "asks" the cloud for our content:</p>
+
+<pre><code>
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
+
+// Initialize the client
+const client = new DynamoDBClient({ region: "us-east-2" });
+const docClient = DynamoDBDocumentClient.from(client);
+
+export async function getPost(postId) {
+  const command = new GetCommand({
+    TableName: "CKC_Posts",
+    Key: { PostID: postId },
+  });
+
+  const response = await docClient.send(command);
+  return response.Item;
+}
+</code></pre>
+
+        <hr>
+
+        <p><strong>Previous:</strong> <a href="hosting-platform.html">Part 1 — The Hosting Platform</a></p>
+        <p><strong>Next:</strong> <a href="backend-framework.html">Part 3 — The Backend Framework (.NET 9) →</a></p>
+      </section>
+
+      <footer class="post-footer">
+        <p class="tags">
+          <span>#DynamoDB</span>
+          <span>#Serverless</span>
+          <span>#DatabaseDesign</span>
+          <span>#AWS</span>
+        </p>
+        <nav class="post-nav">
+          <a href="hosting-platform.html">← Previous Post</a>
+          <a href="backend-framework.html" class="next">Next Post →</a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Geoffrey D. Metzger · Powered by Integrity Programming</p>
+  </footer>
+</body>
+</html>

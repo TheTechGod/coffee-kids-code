@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The CKC Migration: Final Reveal & Lessons — Coffee + Kids + Code</title>
+  <meta name="description" content="Part 5 of The CKC Migration series — Reflecting on the move to AWS, cost-savings, and the future of the platform." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="mini-header">
+    <a class="home-link" href="../../index.html">← Coffee + Kids + Code</a>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <header class="post-header">
+        <h1 class="post-title">The CKC Migration: Final Reveal & Lessons</h1>
+        <p class="post-meta">#DevBlog · April 3, 2026</p>
+      </header>
+
+      <section class="post-body">
+        <p>Five posts, four AWS services, and one massive architectural shift later, the <strong>Coffee + Kids + Code</strong> migration is complete. What started as a goal to "just move the blog" turned into a masterclass in building a modern, decoupled, and cost-effective cloud ecosystem.</p>
+
+        <h3>The Finished Product</h3>
+        <p>If you’ve been following along, here is the architecture we’ve built together:</p>
+        
+        <ul>
+          <li><strong>Frontend:</strong> Next.js hosted on <strong>AWS Amplify</strong> with a global CI/CD pipeline.</li>
+          <li><strong>Database:</strong> A serverless <strong>DynamoDB</strong> table that scales to zero cost.</li>
+          <li><strong>Backend:</strong> A high-performance <strong>.NET 9 Minimal API</strong> running on <strong>AWS Lambda</strong>.</li>
+          <li><strong>Traffic:</strong> A custom domain managed by <strong>Route 53</strong> and accelerated by <strong>CloudFront</strong>.</li>
+        </ul>
+
+        <div class="image-wrapper" style="margin: 2.5rem 0; text-align: center;">
+          <img src="../../img/migration-summary-map.png.png" alt="Full Stack Architecture Map of the CKC Migration" style="width: 100%; max-width: 850px; height: auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <p class="image-caption" style="font-size: 0.9rem; color: #666; font-style: italic; margin-top: 0.75rem;">The Big Picture: A fully decoupled, enterprise-ready cloud stack.</p>
+        </div>
+
+        <h3>The "Master's Level" Results</h3>
+        <p>Beyond the code, here are the three biggest wins from this migration:</p>
+
+        <h4>1. Operational Cost: $0.00</h4>
+        <p>By choosing Serverless options (Amplify, Lambda, DynamoDB), the entire platform lives comfortably within the AWS Free Tier. I have enterprise-grade power with a hobbyist budget. For anyone looking to build a portfolio, this is the gold standard.</p>
+
+        <h4>2. Total Decoupling</h4>
+        <p>Because the .NET backend is separate from the Next.js frontend, I’ve future-proofed my work. If I decide to build a mobile app next month, it can use the exact same API. This is "Secret Sauce" territory—building systems that are modular and reusable.</p>
+
+        <h4>3. Professional Growth</h4>
+        <p>This project proved that I could navigate the complexities of AWS—managing DNS records, configuring SSL certificates, and deploying compiled C# code to a serverless environment. These are the skills that separate "developers" from "architects."</p>
+
+        <hr>
+
+        <h3>What’s Next for CKC?</h3>
+        <p>The migration was just the beginning. Now that the plumbing is solid, it's time to build. My next phase involves integrating the <strong>Open Doors Academy</strong> features—bringing interactive math and spelling tools for kids directly into this platform.</p>
+
+        <p>I’m also working on my "Secret Sauce" freelance search engine, which will live as a separate module powered by the same .NET backend we built in Part 3.</p>
+
+        <hr>
+
+        <p>Thank you for joining me on this migration journey. If you found this helpful, or if you're planning your own move to the cloud, reach out! The best part of <strong>Coffee + Kids + Code</strong> is the community we build along the way.</p>
+
+        <p><strong>Start Over:</strong> <a href="hosting-platform.html">← Part 1 — The Hosting Platform</a></p>
+      </section>
+
+      <footer class="post-footer">
+        <p class="tags">
+          <span>#CloudArchitecture</span>
+          <span>#FullStack</span>
+          <span>#AWS</span>
+          <span>#FinalReveal</span>
+        </p>
+        <nav class="post-nav">
+          <a href="traffic-routing.html">← Previous Post</a>
+          <a href="../../index.html" class="next">Back to Home →</a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Geoffrey D. Metzger · Powered by Integrity Programming</p>
+  </footer>
+</body>
+</html>

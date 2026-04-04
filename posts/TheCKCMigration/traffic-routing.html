@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The CKC Migration: Domain & Traffic Routing — Coffee + Kids + Code</title>
+  <meta name="description" content="Part 4 of The CKC Migration series — Using AWS Route 53 and CloudFront to secure and accelerate global traffic." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/styles.css" />
+</head>
+<body>
+  <header class="mini-header">
+    <a class="home-link" href="../../index.html">← Coffee + Kids + Code</a>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <header class="post-header">
+        <h1 class="post-title">The CKC Migration: Domain & Traffic Routing</h1>
+        <p class="post-meta">#DevBlog · March 27, 2026</p>
+      </header>
+
+      <section class="post-body">
+        <p>At this point in the migration, we have a frontend, a backend, and a database. But currently, the only way to see the site is through a long, ugly <code>.amplifyapp.com</code> URL. To make <strong>Coffee + Kids + Code</strong> a professional brand, we need a custom domain and a way to route traffic securely and fast.</p>
+
+        <h3>The Crossroads</h3>
+        <p>Connecting a domain seems simple, but there are two ways to handle how your "assets" (images, CSS, JS) reach your users.</p>
+        
+        <ul>
+          <li><strong>Option A (Simple DNS):</strong> Just point your domain to the Amplify URL. It works, but users far away from your server's home region will experience lag.</li>
+          <li><strong>Option B (Route 53 + CloudFront CDN):</strong> The "Enterprise" Choice. We use <strong>Route 53</strong> for smart DNS routing and <strong>CloudFront</strong> to cache our site at "Edge Locations" all over the world.</li>
+        </ul>
+
+        <div class="image-wrapper" style="margin: 2.5rem 0; text-align: center;">
+          <img src="../../img/traffic-routing.png" alt="Diagram showing Route 53 and CloudFront distributing traffic globally" style="width: 100%; max-width: 850px; height: auto; border-radius: 8px; border: 1px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <p class="image-caption" style="font-size: 0.9rem; color: #666; font-style: italic; margin-top: 0.75rem;">Global Delivery: Using CloudFront to bring the site closer to the user.</p>
+        </div>
+
+        <p><strong>My Decision: Route 53 + CloudFront</strong></p>
+
+        <h3>The "Why"</h3>
+        <p>I’m not just looking for a vanity URL; I’m looking for <strong>performance and security</strong>. By using <strong>CloudFront</strong>, I am placing my blog on a Global Content Delivery Network (CDN). This means if a reader in Tokyo visits the site, they aren't waiting for data to travel from an Ohio data center—they are getting a cached version from a server right in their backyard.</p>
+        
+        <p>Additionally, this setup allows me to manage **SSL Certificates** via AWS Certificate Manager (ACM), ensuring the site is always encrypted with that "Green Padlock" (HTTPS) that users trust.</p>
+
+        <hr>
+
+        <h3>🛠 My Step-by-Step Guide: Routing Your Traffic</h3>
+        <p>Here is how I moved from a raw AWS URL to a branded domain:</p>
+
+        <h4>Step 1: Registered the Domain</h4>
+        <p>I used <strong>Route 53</strong> to register my domain. This creates a "Hosted Zone" in AWS, which acts as the master record for where every request to my domain should go.</p>
+
+        <h4>Step 2: Requested an SSL Certificate</h4>
+        <p>Security is non-negotiable. I went to <strong>AWS Certificate Manager (ACM)</strong> and requested a public certificate for my domain. Because I use Route 53, AWS was able to automatically "prove" I owned the domain and issued the certificate in minutes.</p>
+
+        <h4>Step 3: Attached the CDN (CloudFront)</h4>
+        <p>Inside the Amplify console, I went to <strong>Domain Management</strong>. AWS Amplify makes this easy by automatically setting up a CloudFront distribution for you when you connect a custom domain. It handles the "caching" logic so my images and styles load instantly.</p>
+
+        <h4>Step 4: The DNS Handshake</h4>
+        <p>Finally, I added an "Alias" record in Route 53 pointing my root domain to the CloudFront distribution. Now, when you type in the URL, AWS handles the rest.</p>
+
+        <hr>
+
+        <p><strong>Previous:</strong> <a href="backend-framework.html">Part 3 — The Backend Framework (.NET 9)</a></p>
+        <p><strong>Next:</strong> <a href="migration-wrap-up.html">Part 5 — The Final Reveal & Lessons Learned →</a></p>
+      </section>
+
+      <footer class="post-footer">
+        <p class="tags">
+          <span>#Route53</span>
+          <span>#CloudFront</span>
+          <span>#Networking</span>
+          <span>#HTTPS</span>
+        </p>
+        <nav class="post-nav">
+          <a href="backend-framework.html">← Previous Post</a>
+          <a href="migration-wrap-up.html" class="next">Next Post →</a>
+        </nav>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Geoffrey D. Metzger · Powered by Integrity Programming</p>
+  </footer>
+</body>
+</html>
